@@ -1,0 +1,12 @@
+- name: Setting '[{{ _conf_section_name }}]' options in medusa.ini
+  become: yes
+  ini_file:
+    dest: /etc/medusa/medusa.ini
+    section: "{{ _conf_section_name }}"
+    option: "{{ _conf_option.key }}"
+    value: "{{ _conf_option.value | string }}"
+  loop: "{{ _conf_options | dict2items }}"
+  loop_control:
+    loop_var: _conf_option
+  # prevent logging passwords, auth URIs, and secrets
+  no_log: "{{ _conf_option.key in medusa_config_no_log[_conf_section_name]|default([]) }}"

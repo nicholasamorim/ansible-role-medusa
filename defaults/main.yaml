@@ -1,0 +1,32 @@
+# Set your configuration in the var below.
+# medusa_config:
+
+# Set this if you want a specific version, otherwise it will install the last one.
+# medusa_version: 0.3.1
+
+# You can also set this to a github link or whatever pip supports
+medusa_pip_name: cassandra-medusa
+# medusa_pip_executable: pip3.7
+
+medusa_pip_install_as_root: true
+# medusa_pip_virtualenv:
+# medusa_pip_virtualenv_python:
+
+medusa_upload_credentials: false
+# Set the credentials on medusa_credentials if you want it to be uploaded
+# medusa_credentials:
+
+# Will never log these fields
+medusa_config_no_log:
+  cassandra:
+    cql_password
+
+# Default settings according to medusa-example.ini
+# https://github.com/thelastpickle/cassandra-medusa/blob/master/medusa-example.ini
+_medusa_config_defaults:
+  storage:
+    max_backup_age: 0
+    max_backup_count: 0
+    transfer_max_bandwidth: 50MB/s
+    concurrent_transfers: 1
+    multi_part_upload_threshold: 104857600

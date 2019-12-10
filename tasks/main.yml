@@ -1,0 +1,34 @@
+- name: Failing if storage_provider is not set
+  run_once: true
+  fail:
+    msg: "You must set at least medusa_config.storage.storage_provider"
+  when: medusa_config.storage.storage_provider is undefined or not medusa_config.storage.storage_provider
+
+- name: Create config folder /etc/medusa
+  file:
+    path: /etc/medusa
+    state: directory
+
+- name: Installing medusa
+  become: "{{ medusa_pip_install_as_root | d(true) }}"
+  pip:
+    virtualenv: "{{ medusa_pip_virtualenv | d(omit) }}"
+    virtualenv_python: "{{ medusa_pip_virtualenv_python | d(omit) }}"
+    executable: "{{ medusa_pip_executable | d(omit) }}"
+    name: "{{ medusa_pip_name }}"
+    version: "{{ medusa_version | d(omit) }}"
+
+- copy:
+    content: "{{ medusa_credentials | to_nice_json(indent=2) }}"
+    dest: "{{ medusa_credentials_location | d('/etc/medusa/credentials') }}"
+  when: medusa_upload_credentials
+
+- name: Configure medusa.ini settings
+  # Ansible nested loop to iterate through a hash of hashes
+  include_tasks: config.yml
+  vars:
+    _conf_section_name: "{{ _conf_section.key }}"
+    _conf_options: "{{ _conf_section.value }}"
+  loop: "{{ _medusa_config_defaults | combine(medusa_config, recursive=True) | dict2items }}"
+  loop_control:
+    loop_var: _conf_section

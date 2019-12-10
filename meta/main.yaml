@@ -1,0 +1,28 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: medusa
+  author: "Nicholas Amorim"
+  description: Installs and configures Medusa (Cassandra backup tool)
+  github_branch: master
+  company:
+  license: MIT
+  min_ansible_version: 2.7
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+  galaxy_tags:
+    - cassandra
+    - backup
+    - database
