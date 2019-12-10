@@ -18,7 +18,8 @@
     name: "{{ medusa_pip_name }}"
     version: "{{ medusa_version | d(omit) }}"
 
-- copy:
+- name: Uploading credentials
+  copy:
     content: "{{ medusa_credentials | to_nice_json(indent=2) }}"
     dest: "{{ medusa_credentials_location | d('/etc/medusa/credentials') }}"
   when: medusa_upload_credentials
