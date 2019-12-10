@@ -2,6 +2,14 @@
 
 An Ansible Role that installs [Medusa](https://github.com/thelastpickle/cassandra-medusa) on Linux.
 
+## Installing
+
+```bash
+$ ansible-galaxy install nicholasamorim.medusa
+```
+
+Or clone this repo inside your `roles` folder.
+
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
